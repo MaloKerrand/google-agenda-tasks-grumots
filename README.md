@@ -1,6 +1,6 @@
 # grumots
 
-CLI tool to create dated reminders in Google Tasks for event communication.
+CLI tool to create Google Tasks reminders for communication around events.
 
 ## Requirements
 
@@ -41,6 +41,8 @@ poetry run python tasks.py
 You will be prompted for:
 
 - Event type: `spectacle` or `stage` (default: `spectacle`)
+- Event name
 - Event date (`YYYY-MM-DD`)
-- Responsible person name
 - Confirmation before creating reminders
+
+Depending on the event type, the script will ask for one or more responsible people and then create multiple reminders with different due dates and target Google Tasks lists.
