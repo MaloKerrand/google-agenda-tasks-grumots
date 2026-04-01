@@ -1,5 +1,4 @@
 import datetime
-import json
 import sys
 from pathlib import Path
 
@@ -15,9 +14,7 @@ from dates import (
     prompt_date,
     prompt_event_name,
     prompt_event_type,
-    prompt_responsible,
     prompt_start_creation,
-    title_event,
 )
 
 # If modifying these scopes, delete the file token.json.
@@ -28,9 +25,10 @@ CREDENTIALS_FILE: Path = _SCRIPT_DIR / "credentials.json"
 
 
 def due_rfc3339(date: datetime.date) -> str:
-    """Start of that calendar day in UTC (Tasks due field is RFC3339)."""
-    dt: datetime.datetime = datetime.datetime.combine(date=date, time=datetime.time.min, tzinfo=datetime.timezone.utc)
-    return dt.isoformat().replace("+00:00", "Z")
+    """18:00 local time on that date, converted to UTC (Tasks due field is RFC3339)."""
+    local_tz = datetime.datetime.now().astimezone().tzinfo
+    dt = datetime.datetime.combine(date=date, time=datetime.time(hour=18), tzinfo=local_tz)
+    return dt.astimezone(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 def get_credentials() -> Credentials:
