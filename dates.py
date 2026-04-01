@@ -167,9 +167,7 @@ def title_event(
     event_date: datetime.date,
     responsible: str,
 ) -> str:
-    return (
-        f"[{responsible}][{event_name}] {main_message} pour le {event_type.value} du {event_date.strftime('%d/%m/%Y')}"
-    )
+    return f"[{responsible}][{event_name}] {main_message} pour le {event_type.value} du {event_date.strftime('%d/%m')}"
 
 
 def get_tasks_list_name_to_id(service: Resource) -> dict[str, str]:
