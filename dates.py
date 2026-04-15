@@ -67,56 +67,47 @@ def all_dates(
 ) -> list[tuple[str, datetime.date, str]]:
     match event_type:
         case EventType.SHOW:
-            return all_dates_show(event_type=event_type, event_name=event_name, event_date=event_date)
+            return all_dates_show(event_name=event_name, event_date=event_date)
         case EventType.STAGE:
-            return all_dates_stage(event_type=event_type, event_name=event_name, event_date=event_date)
+            return all_dates_stage(event_name=event_name, event_date=event_date)
         case _:
             raise ValueError(f"Invalid event type: {event_type}")
 
 
-def all_dates_show(
-    event_type: EventType,
-    event_name: str,
-    event_date: datetime.date,
-) -> list[tuple[str, datetime.date, str]]:
+def all_dates_show(event_name: str, event_date: datetime.date) -> list[tuple[str, datetime.date, str]]:
+    responsible_stories: str = prompt_responsible(what="des stories du spectacle")
     stories_show_title: str = title_event(
-        main_message="Faire une story",
-        event_type=event_type,
+        main_message="Story",
         event_name=event_name,
         event_date=event_date,
-        responsible=prompt_responsible(what="des stories du spectacle"),
+        responsible=responsible_stories,
     )
     stories_ps_title: str = title_event(
-        main_message="Faire une story places suspendues",
-        event_type=event_type,
+        main_message="Story places suspendues",
         event_name=event_name,
         event_date=event_date,
-        responsible=prompt_responsible(what="des stories pour les places suspendues", default="Maxime"),
+        responsible=responsible_stories,
     )
     online_agenda_title: str = title_event(
-        main_message="Mettre à jour les agendas en ligne",
-        event_type=event_type,
+        main_message="Agenda en ligne",
         event_name=event_name,
         event_date=event_date,
         responsible=prompt_responsible(what="des agendas en ligne", default="Leandra"),
     )
     whatsapp_title: str = title_event(
-        main_message="Envoyer un message dans whatsapp",
-        event_type=event_type,
+        main_message="Whatsapp",
         event_name=event_name,
         event_date=event_date,
         responsible=prompt_responsible(what="du message whatsapp", default="Leandra"),
     )
     photo_sort_title: str = title_event(
-        main_message="Faire tri photo",
-        event_type=event_type,
+        main_message="Tri photo",
         event_name=event_name,
         event_date=event_date,
         responsible=prompt_responsible(what="du tri des photo"),
     )
     story_photo_title: str = title_event(
-        main_message="Faire un post insta",
-        event_type=event_type,
+        main_message="Post insta",
         event_name=event_name,
         event_date=event_date,
         responsible=prompt_responsible(what="du post insta post-spectacle"),
@@ -137,14 +128,9 @@ def all_dates_show(
     ]
 
 
-def all_dates_stage(
-    event_type: EventType,
-    event_name: str,
-    event_date: datetime.date,
-) -> list[tuple[str, datetime.date, str]]:
+def all_dates_stage(event_name: str, event_date: datetime.date) -> list[tuple[str, datetime.date, str]]:
     stage_title: str = title_event(
-        main_message="Faire une story",
-        event_type=event_type,
+        main_message="Story",
         event_name=event_name,
         event_date=event_date,
         responsible=prompt_responsible(what="du stage"),
@@ -160,14 +146,8 @@ def all_dates_stage(
     ]
 
 
-def title_event(
-    main_message: str,
-    event_type: EventType,
-    event_name: str,
-    event_date: datetime.date,
-    responsible: str,
-) -> str:
-    return f"[{responsible}][{event_name}] {main_message} pour le {event_type.value} du {event_date.strftime('%d/%m')}"
+def title_event(main_message: str, event_name: str, event_date: datetime.date, responsible: str) -> str:
+    return f"[{responsible}] {event_name} - {main_message} {event_date.strftime('%d/%m')}"
 
 
 def get_tasks_list_name_to_id(service: Resource) -> dict[str, str]:
