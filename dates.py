@@ -100,17 +100,18 @@ def all_dates_show(event_name: str, event_date: datetime.date) -> list[tuple[str
         event_date=event_date,
         responsible=prompt_responsible(what="du message whatsapp", default="Leandra"),
     )
+    responsible_photo: str = prompt_responsible(what="du tri des photo")
     photo_sort_title: str = title_event(
         main_message="Tri photo",
         event_name=event_name,
         event_date=event_date,
-        responsible=prompt_responsible(what="du tri des photo"),
+        responsible=responsible_photo,
     )
     story_photo_title: str = title_event(
         main_message="Post insta",
         event_name=event_name,
         event_date=event_date,
-        responsible=prompt_responsible(what="du post insta post-spectacle"),
+        responsible=prompt_responsible(what="du post insta post-spectacle", default=responsible_photo),
     )
     return [
         (online_agenda_title, event_date - datetime.timedelta(days=14), "Comm Autre"),
