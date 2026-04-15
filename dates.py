@@ -122,8 +122,8 @@ def all_dates_show(event_name: str, event_date: datetime.date) -> list[tuple[str
         (whatsapp_title, event_date - datetime.timedelta(days=7), "Comm Autre"),
         (stories_show_title, event_date - datetime.timedelta(days=5), "Stories spectacles"),
         (stories_show_title, event_date - datetime.timedelta(days=3), "Stories spectacles"),
+        (stories_ps_title, event_date - datetime.timedelta(days=1), "Story/Post autre"),
         (stories_show_title, event_date - datetime.timedelta(days=1), "Stories spectacles"),
-        (stories_ps_title, event_date + datetime.timedelta(days=1), "Story/Post autre"),
         (photo_sort_title, event_date + datetime.timedelta(days=2), "Story/Post autre"),
         (story_photo_title, event_date + datetime.timedelta(days=3), "Insta post-spectacle"),
     ]
